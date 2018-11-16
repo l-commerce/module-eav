@@ -1,7 +1,7 @@
 {
-    "name": "sunel/eav",
+    "name": "l-commerce/module-eav",
     "description": "Eav For Artisan.",
-    "keywords": ["eav", "laravel"],
+    "keywords": ["eav", "laravel", "l-commerce"],
     "license": "MIT",
     "require": {
         "php": ">=7.0.0",
@@ -14,8 +14,8 @@
     },
     "authors": [
         {
-            "name": "Sunel TR",
-            "email": "sunelbe@gmail.com"
+            "name": "Ruthger Idema",
+            "email": "ruthger.idema@gmail.com"
         }
     ],
     "autoload": {
