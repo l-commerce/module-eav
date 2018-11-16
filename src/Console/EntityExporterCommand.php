@@ -62,7 +62,7 @@ class EntityExporterCommand extends Command
 
             $path = $this->getExportPath($entityCode);
             (new EntityExporter($entity, $this->files, $this))->export($path);
-            
+
             $this->info("\n\nData has been exported to : $path.");
         } catch (ModelNotFoundException $e) {
             $this->error("`{$entityCode}` entity doesn't exists.");
@@ -76,7 +76,7 @@ class EntityExporterCommand extends Command
      */
     protected function getExportPath($name)
     {
-        if (! is_null($targetPath = $this->input->getOption('path'))) {
+        if (! \is_null($targetPath = $this->input->getOption('path'))) {
             return $this->laravel->basePath().'/'.rtrim(trim($targetPath), '/').'/'. $name . '.csv';
         }
 

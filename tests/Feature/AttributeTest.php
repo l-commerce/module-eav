@@ -206,7 +206,7 @@ class AttributeTest extends TestCase
             'entity_code' => 'car',
         ]);
 
-        $value = 'HGKHDGEYTT'. rand();
+        $value = 'HGKHDGEYTT'. mt_rand();
 
         $eloquent = new class() extends \Eav\Model {
             const ENTITY  = 'car';
@@ -233,7 +233,7 @@ class AttributeTest extends TestCase
             'entity_code' => 'car',
         ]);
 
-        $value = 'HGKHDGEYTT'. rand();
+        $value = 'HGKHDGEYTT'. mt_rand();
 
         $eloquent = new class() extends \Eav\Model {
             const ENTITY  = 'car';
@@ -251,7 +251,7 @@ class AttributeTest extends TestCase
             'value' => $value
         ]);
 
-        $value = 'HGKHDGEYTT'. rand();
+        $value = 'HGKHDGEYTT'. mt_rand();
 
         $sku->updateAttribute($value, $eloquent->getKey());
 
@@ -271,7 +271,7 @@ class AttributeTest extends TestCase
             'entity_code' => 'car',
         ]);
 
-        $value = 'HGKHDGEYTT'. rand();
+        $value = 'HGKHDGEYTT'. mt_rand();
 
         $eloquent = new class() extends \Eav\Model {
             const ENTITY  = 'car';

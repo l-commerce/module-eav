@@ -19,12 +19,12 @@ trait QueryBuilder
             'entity_id' => $entityId,
             'value' => $value
         ];
-        
+
         return $this->newBaseQueryBuilder()
             ->from($this->backendTable())
             ->getInsertSql($insertData);
     }
-    
+
     /**
      * Add a new select column to the query.
      *
@@ -42,7 +42,7 @@ trait QueryBuilder
 
         $query->addSelect([$this->getSelectColumn()]);
     }
-    
+
     /**
      * Retrive the select column for the attribute.
      *
@@ -70,14 +70,16 @@ trait QueryBuilder
 
         return "{$this->code()}_attr.value";
     }
-    
-    
+
+
     /**
      * Add a join clause to the query for the attribute.
      *
      * @param Illuminate\Database\Query\Builder $query
-     * @param string $joinType
-     * @param \Closure $callback
+     * @param string                            $joinType
+     * @param \Closure                          $callback
+     *
+     * @return \Eav\Attribute\Concerns\QueryBuilder
      */
     public function addAttributeJoin($query, $joinType = 'inner', $callback = null)
     {
@@ -86,12 +88,12 @@ trait QueryBuilder
         }
 
         $query->joinCache[$this->code()] = 1;
-        
-        if (is_callable($callback)) {
+
+        if (\is_callable($callback)) {
             $callback = function ($join) use ($query) {
                 $callback($join, $query, "{$this->code()}_attr");
             };
-            
+
             if ($joinType == 'left') {
                 $query->leftJoin("{$this->backendTable()} as {$this->code()}_attr", $callback);
             } else {
@@ -110,7 +112,7 @@ trait QueryBuilder
                 });
             }
         }
-        
+
         return $this;
     }
 
@@ -131,7 +133,7 @@ trait QueryBuilder
 
         return $this;
     }
-    
+
 
     /**
      * Add a basic where based on the type.

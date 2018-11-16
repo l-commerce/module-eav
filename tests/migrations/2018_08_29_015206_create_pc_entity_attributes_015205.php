@@ -12,6 +12,7 @@ class CreatePcEntityAttributes015205 extends Migration
      * Run the migrations.
      *
      * @return void
+     * @throws \Exception
      */
     public function up()
     {
@@ -35,6 +36,7 @@ class CreatePcEntityAttributes015205 extends Migration
      * Reverse the migrations.
      *
      * @return void
+     * @throws \Exception
      */
     public function down()
     {

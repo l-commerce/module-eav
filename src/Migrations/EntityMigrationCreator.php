@@ -55,19 +55,19 @@ class EntityMigrationCreator
     public function create($name, $orgPath, $class)
     {
         $path = $this->getMainPath($name, $orgPath);
-        
+
         $stub = $this->getMainStub();
 
         $this->files->put($path, $this->populateStub($name, $stub, $class, 'Main'));
-        
+
         sleep(2);
-        
+
         $path = $this->getPath($name, $orgPath);
 
         $stub = $this->getStub();
 
         $this->files->put($path, $this->populateStub($name, $stub, $class));
-        
+
 
         $this->firePostCreateHooks();
 
@@ -83,7 +83,7 @@ class EntityMigrationCreator
     {
         return $this->files->get($this->getStubPath()."/create.entity.stub");
     }
-    
+
     /**
      * Get the migration stub file.
      *
@@ -111,7 +111,7 @@ class EntityMigrationCreator
         $stub = str_replace('DummyClass', $this->getClassName($name, $suffix), $stub);
 
         $stub = str_replace('DummyTable', $name, $stub);
-        
+
         $stub = str_replace('DummyBaseClass', $class, $stub);
 
         return $stub;
@@ -152,7 +152,7 @@ class EntityMigrationCreator
         foreach ($fieldTypes as $type) {
             $stub .= str_replace('FIELDTYPE', $type, $attributeStub);
         }
-        
+
         return str_replace('DOWNMIGRATION', $stub, $mainStub);
     }
 
@@ -194,7 +194,7 @@ class EntityMigrationCreator
     protected function firePostCreateHooks()
     {
         foreach ($this->postCreate as $callback) {
-            call_user_func($callback);
+            \call_user_func($callback);
         }
     }
 
@@ -220,7 +220,7 @@ class EntityMigrationCreator
     {
         return $path.'/'.$this->getDatePrefix().'_create_'.$name.'_entity_table.php';
     }
-    
+
     /**
      * Get the full path name to the migration.
      *

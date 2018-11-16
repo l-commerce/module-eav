@@ -37,7 +37,7 @@ class FacetTest extends TestCase
         Cars::create([
             'name' => 'Flamethrower',
             'sku'  => 'PDO1HJK92',
-            'age' => rand(50, 100),
+            'age' => random_int(50, 100),
             'search' => 1,
             'purchased_at' => new \DateTime('2018-09-02T15:02:01.012345Z')
         ]);

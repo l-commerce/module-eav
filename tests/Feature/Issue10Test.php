@@ -75,7 +75,7 @@ class Issue10Test extends TestCase
         $car = Tesla::create([
             'name' => 'Flamethrower',
             'sku'  => 'PDO1HJK92',
-            'age' => rand(50, 100),
+            'age' => random_int(50, 100),
             'search' => 1
         ]);
 

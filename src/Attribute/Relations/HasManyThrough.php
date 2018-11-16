@@ -69,7 +69,12 @@ class HasManyThrough extends Relation
 
         return $models;
     }
-    
+
+    /**
+     * @param $model
+     *
+     * @return bool
+     */
     private function canRelate($model)
     {
         return !$model->usesSource();

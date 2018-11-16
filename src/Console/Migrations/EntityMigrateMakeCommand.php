@@ -61,7 +61,7 @@ class EntityMigrateMakeCommand extends Command
     public function handle()
     {
         $name = $this->input->getArgument('name');
-        
+
         $class = $this->input->getArgument('class');
 
         // Now we are ready to write the migration out to disk. Once we've written
@@ -98,7 +98,7 @@ class EntityMigrateMakeCommand extends Command
      */
     protected function getMigrationPath()
     {
-        if (! is_null($targetPath = $this->input->getOption('path'))) {
+        if (! \is_null($targetPath = $this->input->getOption('path'))) {
             return $this->laravel->basePath().'/'.$targetPath;
         }
 

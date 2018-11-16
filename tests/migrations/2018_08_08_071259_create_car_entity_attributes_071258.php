@@ -12,6 +12,7 @@ class CreateCarEntityAttributes071258 extends Migration
      * Run the migrations.
      *
      * @return void
+     * @throws \Exception
      */
     public function up()
     {
@@ -29,7 +30,7 @@ class CreateCarEntityAttributes071258 extends Migration
                 'is_required' => 0,
                 'required_validate_class' =>  null
             ]);
-            
+
         Attribute::add([
                 'attribute_code' => 'name',
                 'entity_code' => 'car',
@@ -59,7 +60,7 @@ class CreateCarEntityAttributes071258 extends Migration
                 'is_required' => 0,
                 'required_validate_class' =>  null
             ]);
-            
+
         Attribute::add([
                 'attribute_code' => 'search',
                 'entity_code' => 'car',
@@ -75,7 +76,7 @@ class CreateCarEntityAttributes071258 extends Migration
                 'is_required' => 0,
                 'required_validate_class' =>  null
             ]);
-            
+
         Attribute::add([
                 'attribute_code' => 'description',
                 'entity_code' => 'car',
@@ -112,6 +113,7 @@ class CreateCarEntityAttributes071258 extends Migration
      * Reverse the migrations.
      *
      * @return void
+     * @throws \Exception
      */
     public function down()
     {
@@ -119,7 +121,7 @@ class CreateCarEntityAttributes071258 extends Migration
                 'attribute_code' => 'sku',
                 'entity_code' => 'car',
             ]);
-            
+
         Attribute::remove([
                 'attribute_code' => 'name',
                 'entity_code' => 'car',
@@ -129,12 +131,12 @@ class CreateCarEntityAttributes071258 extends Migration
                 'attribute_code' => 'age',
                 'entity_code' => 'car',
             ]);
-            
+
         Attribute::remove([
                 'attribute_code' => 'search',
                 'entity_code' => 'car',
             ]);
-            
+
         Attribute::remove([
                 'attribute_code' => 'description',
                 'entity_code' => 'car',

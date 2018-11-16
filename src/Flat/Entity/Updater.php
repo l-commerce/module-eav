@@ -46,9 +46,9 @@ class Updater
         $entity = app($this->entity->entity_class);
 
         $flatEntity = app($this->entity->entity_class);
-    
+
         $flatEntity->baseEntity();
-        
+
         $flatEntity->setUseFlat(true);
 
         $flatEntity->truncate();
@@ -72,9 +72,9 @@ class Updater
             ->orderBy($entity->getKeyName(), 'asc')
             ->chunk($count, function ($chunk) use ($entity, $flatEntity, $attributes, &$bar) {
                 $ids = $chunk->pluck($entity->getKeyName())->toArray();
-                
+
                 $products = Collection::make([]);
-                
+
                 $attributes->chunk(50)->each(function ($chunk, $key) use ($entity, $ids, &$products) {
                     $entity->select('*', ...$chunk->keys()->toArray())
                         ->whereIn("{$entity->getQuery()->from}.{$entity->getKeyName()}", $ids)
@@ -92,7 +92,7 @@ class Updater
                 $flatEntity->insert($products->toArray());
                 $flatEntity->setUseFlat(false);
 
-                $bar->advance(count($ids));
+                $bar->advance(\count($ids));
             });
 
         $bar->finish();

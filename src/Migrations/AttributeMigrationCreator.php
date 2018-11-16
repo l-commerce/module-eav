@@ -30,23 +30,25 @@ class AttributeMigrationCreator
     /**
      * Populate migration from string.
      *
-     * @param  string  $attributes
-     * @param  string  $entity
-     * @param  string  $stub
+     * @param  string $attributes
+     * @param  string $entity
+     * @param  string $stub
+     *
      * @return [string, array]
+     * @throws \Exception
      */
     public function createFromString($attributes, $entity, $path)
     {
         $attStub = $attStubR =  '';
-        
+
         $attRemoveStubDefault = $this->getAttributeRemoveStub();
 
         $attributesProcessed = [];
-        
+
         foreach (explode(',', $attributes) as $attribute) {
             $info = explode(':', $attribute);
 
-            if (strlen($info[0]) > 50) {
+            if (\strlen($info[0]) > 50) {
                 throw new \Exception("$info[0] : attribute_code is too long must be within 50");
             }
 
@@ -67,10 +69,12 @@ class AttributeMigrationCreator
     /**
      * Populate migration from source path.
      *
-     * @param  string  $source
-     * @param  string  $entity
-     * @param  string  $stub
+     * @param  string $source
+     * @param  string $entity
+     * @param  string $stub
+     *
      * @return [string, array]
+     * @throws \Exception
      */
     public function createFromSource($source, $entity, $path)
     {
@@ -79,13 +83,13 @@ class AttributeMigrationCreator
         $records = $reader->getRecords();
 
         $attStub = $attStubR =  '';
-        
+
         $attRemoveStubDefault = $this->getAttributeRemoveStub();
 
         $attributesProcessed = [];
 
         foreach ($records as $offset => $record) {
-            if (strlen($record['attribute_code']) > 50) {
+            if (\strlen($record['attribute_code']) > 50) {
                 throw new \Exception("{$record['attribute_code']} : attribute_code is too long must be within 50");
             }
 
@@ -156,7 +160,7 @@ class AttributeMigrationCreator
     protected function populateMigration($up, $down, $entity, $stub)
     {
         $stub = str_replace('DummyClass', $this->getClassName("create_{$entity}_entity_attributes_".date('His')), $stub);
-        
+
         $stub = str_replace(['ADDATTRIBUTE', 'REMOVEATTRIBUTE'], [$up, $down], $stub);
 
         $stub = str_replace('ENTITYCODE', $entity, $stub);
@@ -204,7 +208,7 @@ class AttributeMigrationCreator
     {
         return $this->files->get($this->getStubPath()."/attribute.add.stub");
     }
-    
+
     /**
      * Get the migration stub file.
      *
@@ -228,7 +232,7 @@ class AttributeMigrationCreator
     protected function populateStub($attributes, $entity, $stub)
     {
         $stub = str_replace('DummyClass', $this->getClassName("create_{$entity}_entity_attributes_".date('His')), $stub);
-        
+
         $attStub = $attStubR =  '';
         $attAddStubDefault = $this->getAttributeAddStub();
         $attRemoveStubDefault = $this->getAttributeRemoveStub();
@@ -236,7 +240,7 @@ class AttributeMigrationCreator
             $attStub .= str_replace('ATTRIBUTECODE', $attribute, $attAddStubDefault);
             $attStubR .= str_replace('ATTRIBUTECODE', $attribute, $attRemoveStubDefault);
         }
-        
+
         $stub = str_replace(['ADDATTRIBUTE', 'REMOVEATTRIBUTE'], [$attStub, $attStubR], $stub);
 
         $stub = str_replace('ENTITYCODE', $entity, $stub);

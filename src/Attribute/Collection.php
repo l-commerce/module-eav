@@ -10,8 +10,10 @@ class Collection extends BaseCollection
     /**
      * Validate the data.
      *
-     * @param  mixed  $data
+     * @param  mixed $data
+     *
      * @return array
+     * @throws \Eav\Attribute\ValidationException
      */
     public function validate($data)
     {
@@ -29,7 +31,7 @@ class Collection extends BaseCollection
                 }
             }
         });
-        
+
         $attributeValidator = Validator::make($data, $rules);
 
         if ($attributeValidator->fails()) {
@@ -61,8 +63,8 @@ class Collection extends BaseCollection
             return $result;
         }, []));
     }
-    
-    
+
+
     /**
      * Intersect the collection with the given items.
      *
@@ -73,8 +75,8 @@ class Collection extends BaseCollection
     {
         return new static(array_intersect_key($this->items, array_flip($keys)));
     }
-    
-    
+
+
     /**
      * Merge the collection with the given items.
      *
@@ -91,8 +93,8 @@ class Collection extends BaseCollection
 
         return new static($dictionary);
     }
-    
-    
+
+
     /**
      * Get a dictionary keyed by primary keys.
      *
@@ -101,7 +103,7 @@ class Collection extends BaseCollection
      */
     public function getDictionary($items = null)
     {
-        $items = is_null($items) ? $this->items : $items;
+        $items = \is_null($items) ? $this->items : $items;
 
         $dictionary = [];
 

@@ -118,7 +118,7 @@ class WhereQueryTest extends TestCase
         $product = Cars::whereInAttribute('age', [10, 11, 15])
                     ->orWhereInAttribute('age', [14, 18])
                     ->get();
-                       
+
         $this->assertTrue($product->isNotEmpty());
         $this->assertEquals($product->count(), 1);
     }
@@ -151,7 +151,7 @@ class WhereQueryTest extends TestCase
         $product = Cars::whereNotInAttribute('sku', ['PDOBEEAM112', 'RAMDOM'])
                     ->orWhereNotInAttribute('age', [14, 18])
                     ->get(['sku']);
-                       
+
         $this->assertTrue($product->isNotEmpty());
         $this->assertEquals($product->first()->sku, 'PDO1HJK92');
     }
@@ -330,7 +330,7 @@ class WhereQueryTest extends TestCase
         return Cars::create([
             'name' => 'Flamethrower',
             'sku'  => 'PDO1HJK92',
-            'age' => rand(50, 100),
+            'age' => random_int(50, 100),
             'search' => 1,
             'purchased_at' => new \DateTime('2018-09-02T15:02:01.012345Z')
         ]);

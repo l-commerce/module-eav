@@ -6,7 +6,7 @@ use Eav\Attribute\Source;
 
 class Boolean extends Source
 {
-        
+
     /**
      * Option values
      */
@@ -21,7 +21,7 @@ class Boolean extends Source
      */
     public function getAllOptions()
     {
-        if (is_null($this->options)) {
+        if (\is_null($this->options)) {
             $this->options = array(
                 array(
                     'label' =>'Yes',

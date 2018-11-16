@@ -86,7 +86,7 @@ class Exporter
         $entity = app($this->entity->entity_class);
 
         $this->makeDirectory($path);
-        
+
         $this->files->put($path, '');
 
         $writer = Writer::createFromPath($path, 'w+');
@@ -102,9 +102,9 @@ class Exporter
             ->orderBy($entity->getKeyName(), 'asc')
             ->chunk($count, function ($chunk, $page) use ($entity, $writer, &$bar) {
                 $ids = $chunk->pluck($entity->getKeyName())->toArray();
-                
+
                 $products = Collection::make([]);
-                
+
                 $this->attributes->chunk(50)->each(function ($chunk, $key) use ($entity, $ids, &$products) {
                     $entity->select('*', ...$chunk->keys()->toArray())
                         ->whereIn("{$entity->getQuery()->from}.{$entity->getKeyName()}", $ids)
@@ -127,12 +127,17 @@ class Exporter
 
                 $writer->insertAll($products->toArray());
 
-                $bar->advance(count($ids));
+                $bar->advance(\count($ids));
             });
 
         $bar->finish();
     }
 
+    /**
+     * @param array $row
+     *
+     * @return array
+     */
     protected function formate(array $row): array
     {
         $row['entity_id'] = $this->entity->getCode();
@@ -144,11 +149,11 @@ class Exporter
         });
 
         $this->selectAttr->each(function ($attribute, $code) use (&$row) {
-            if (!is_null($row[$code])) {
+            if (!\is_null($row[$code])) {
                 $row[$code] = array_get($attribute->options(), $row[$code]);
             }
         });
-        
+
         return $row;
     }
 
@@ -160,8 +165,8 @@ class Exporter
      */
     protected function makeDirectory(string $path): void
     {
-        if (!$this->files->isDirectory(dirname($path))) {
-            $this->files->makeDirectory(dirname($path), 0777, true, true);
+        if (!$this->files->isDirectory(\dirname($path))) {
+            $this->files->makeDirectory(\dirname($path), 0777, true, true);
         }
     }
 }

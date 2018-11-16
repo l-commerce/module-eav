@@ -61,7 +61,7 @@ class EntityAttributeMapCommand extends Command
     public function handle()
     {
         $attributes = $this->input->getArgument('attributes');
-        
+
         $entity = $this->input->getArgument('entity');
 
         // Now we are ready to write the migration out to disk. Once we've written
@@ -96,7 +96,7 @@ class EntityAttributeMapCommand extends Command
      */
     protected function getMigrationPath()
     {
-        if (! is_null($targetPath = $this->input->getOption('path'))) {
+        if (! \is_null($targetPath = $this->input->getOption('path'))) {
             return $this->laravel->basePath().'/'.$targetPath;
         }
 

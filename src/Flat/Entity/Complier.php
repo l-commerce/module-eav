@@ -18,7 +18,7 @@ class Complier
      * @var Filesystem
      */
     protected $files;
-    
+
     protected $entity;
 
     protected $console;
@@ -37,18 +37,18 @@ class Complier
         $path = $this->getPath($this->entity->entity_table.'_flat');
 
         $this->console->info("\t in {$path}");
-        
+
         $this->makeDirectory($path);
-        
+
         $this->files->put($path, $this->compileMigrationStub());
-        
+
         $this->files->requireOnce($path);
-        
+
         $this->console->info("\t Migrating `{$this->entity->entity_table}` flat schema.");
 
         $this->runUp($path);
     }
-    
+
     /**
      * Run "up" a migration instance.
      *
@@ -66,7 +66,7 @@ class Complier
 
         $migration->up();
     }
-    
+
     /**
     * Resolve a migration instance from a file.
     *
@@ -100,20 +100,20 @@ class Complier
                 } else {
                     $schema = "{$attribute['COLUMN_NAME']}:{$this->getColumn($attribute['DATA_TYPE'])}";
                 }
-            
+
                 if (Str::contains($attribute['COLUMN_TYPE'], 'unsigned')) {
                     $schema .= ":unsigned";
                 }
-                
+
                 if ($attribute['IS_NULLABLE'] != 'NO') {
                     $schema .= ":nullable";
                 }
-                
+
                 if ($attribute['COLUMN_DEFAULT'] != null && $attribute['COLUMN_DEFAULT'] != "NULL") {
                     $schema .= ":default('{$attribute['COLUMN_DEFAULT']}')";
                 }
             }
-            
+
             return $schema;
         });
 
@@ -133,30 +133,30 @@ class Complier
                 $schema = "{$attribute->getAttributeCode()}";
 
                 $backendTable = $attribute->getBackendType();
-                
+
                 if ($backendTable == 'char' || $backendTable == 'string') {
                     $schema .= ":{$backendTable}({$table['CHARACTER_MAXIMUM_LENGTH']})";
-                } elseif (in_array($backendTable, ['decimal', 'double', 'float', 'unsignedDecimal'])) {
+                } elseif (\in_array($backendTable, ['decimal', 'double', 'float', 'unsignedDecimal'])) {
                     $schema .= ":{$backendTable}({$table['NUMERIC_PRECISION']}, {$table['NUMERIC_SCALE']})";
                 } else {
                     $schema .= ":{$backendTable}";
                 }
-                
+
                 $schema .= ":nullable";
-                
+
                 if ($defaultValue = $attribute->getDefaultValue()) {
                     $schema .= ":default('$defaultValue')";
                 }
-                
+
                 $attributes->push($schema);
             });
             return false;
         });
-        
+
         $this->console->info("\t Found {$attributes->count()} attributes.");
-        
+
         $schema = (new SchemaParser)->parse($table->implode(',').','.$attributes->implode(','));
-        
+
         return (new SyntaxBuilder)->create($schema);
     }
 
@@ -167,24 +167,24 @@ class Complier
      */
     public function describe($table, $clouser = null)
     {
-        if (is_null($clouser)) {
+        if (\is_null($clouser)) {
             $clouser = function ($query) {
                 return $query;
             };
         }
 
         $connection = \DB::connection();
-        
+
         $database = $connection->getDatabaseName();
 
         $table = $connection->getTablePrefix().$table;
-        
+
         $result = \DB::table('information_schema.columns')
                 ->where('table_schema', $database)
                 ->where('table_name', $table)
                 ->where($clouser)
                 ->get();
-                
+
         return new Collection(json_decode(json_encode($result), true));
     }
 
@@ -196,8 +196,8 @@ class Complier
      */
     protected function makeDirectory($path)
     {
-        if (!$this->files->isDirectory(dirname($path))) {
-            $this->files->makeDirectory(dirname($path), 0777, true, true);
+        if (!$this->files->isDirectory(\dirname($path))) {
+            $this->files->makeDirectory(\dirname($path), 0777, true, true);
         }
     }
     /**
@@ -208,13 +208,13 @@ class Complier
      */
     protected function getPath($name)
     {
-        if (! is_null($targetPath = $this->console->option('path'))) {
+        if (! \is_null($targetPath = $this->console->option('path'))) {
             return $this->console->getLaravel()->basePath().'/'.rtrim(trim($targetPath), '/').'/'. $name . '.php';
         }
 
         return $this->console->getLaravel()->databasePath().'/migrations/eav/' . $name . '.php';
     }
-   
+
     /**
      * Compile the migration stub.
      *
@@ -265,7 +265,7 @@ class Complier
         return $this;
     }
 
-    
+
     protected function getColumn($type)
     {
         switch ($type) {

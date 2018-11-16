@@ -70,13 +70,13 @@ class AttributeMigrateMakeCommand extends Command
 
         $path = $this->getMigrationPath();
 
-        if (is_null($attributes) && is_null($source)) {
+        if (\is_null($attributes) && \is_null($source)) {
             $this->error('Either --attributes or --source must be given');
             exit(1);
         }
 
         try {
-            if (!is_null($attributes)) {
+            if (!\is_null($attributes)) {
                 list($file, $attributes) = $this->creator->createFromString($attributes, $entity, $path);
             } else {
                 list($file, $attributes) = $this->creator->createFromSource($source, $entity, $path);
@@ -88,7 +88,7 @@ class AttributeMigrateMakeCommand extends Command
 
         $file = pathinfo($file, PATHINFO_FILENAME);
         $this->info("Created Migration: $file");
-        
+
         $this->call('eav:map:attribute', ['attributes' => implode(',', $attributes), 'entity' => $entity]);
     }
 
@@ -99,7 +99,7 @@ class AttributeMigrateMakeCommand extends Command
      */
     protected function getMigrationPath()
     {
-        if (! is_null($targetPath = $this->input->getOption('path'))) {
+        if (! \is_null($targetPath = $this->input->getOption('path'))) {
             return $this->laravel->basePath().'/'.$targetPath;
         }
 

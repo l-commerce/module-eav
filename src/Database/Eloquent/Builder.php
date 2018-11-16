@@ -5,11 +5,19 @@ use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 
 class Builder extends EloquentBuilder
 {
+    /**
+     * @return mixed
+     */
     public function baseEntity()
     {
         return $this->getModel()->baseEntity();
     }
 
+    /**
+     * @param bool $count
+     *
+     * @return mixed
+     */
     public function getFacets($count = false)
     {
         $baseEntity = $this->baseEntity();
